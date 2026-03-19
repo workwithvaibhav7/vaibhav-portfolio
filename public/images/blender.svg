@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <circle cx="128" cy="128" r="128" fill="#1A1A1A"/>
+  <!-- Blender logo shape -->
+  <g transform="translate(40, 40) scale(0.68)">
+    <!-- Outer ring -->
+    <circle cx="128" cy="128" r="90" fill="none" stroke="#EA7600" stroke-width="22"/>
+    <!-- Inner dot -->
+    <circle cx="128" cy="128" r="28" fill="#EA7600"/>
+    <!-- Arm going right -->
+    <rect x="128" y="116" width="90" height="24" fill="#EA7600"/>
+    <!-- Small circle at end of arm -->
+    <circle cx="232" cy="128" r="18" fill="#EA7600"/>
+  </g>
+</svg>

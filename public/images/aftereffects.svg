@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect width="256" height="256" rx="30" fill="#1A1A1A"/>
+  <!-- After Effects purple/blue gradient background -->
+  <rect width="256" height="256" rx="30" fill="#00005B"/>
+  <!-- AE Text -->
+  <text x="128" y="160" 
+        font-family="Arial Black, sans-serif" 
+        font-size="110" 
+        font-weight="900"
+        text-anchor="middle" 
+        fill="#9999FF"
+        letter-spacing="-4">Ae</text>
+</svg>
