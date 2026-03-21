@@ -18,8 +18,8 @@
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
-  --accentColor: #FF6B35;
-  --backgroundColor: #0d0d1a;
+  --accentColor: #FF4D6D;
+  --backgroundColor: #130d1a;
   --vh: 100vh;
   --vh: 100svh;
 }
@@ -66,7 +66,7 @@ main {
 body {
   margin: 0;
   height: auto;
-  background-color: #080810;
+  background-color: #130d1a;
   flex-grow: 1;
   --cWidth: calc(100% - 30px);
   --cMaxWidth: 1920px;
