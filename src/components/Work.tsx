@@ -4,6 +4,12 @@ import { MdArrowBack, MdArrowForward } from "react-icons/md";
 
 const projects = [
   {
+    title: "Motion Graphic Reel Edit",
+    category: "Motion Graphics",
+    tools: "After Effects, Premiere Pro, Motion Design",
+    videoId: "17Wg7gomIdSws5v3gOuafHXN_yyZ4S1zZ",
+  },
+  {
     title: "Motion Graphics Talking Head Short",
     category: "Motion Graphics",
     tools: "After Effects, Premiere Pro, Motion Design",
@@ -16,12 +22,6 @@ const projects = [
     videoId: "1LRn9F7J0w1BzuYhzt7uSPzo5B3zRW6cp",
   },
   {
-    title: "Motion Graphic Reel Edit",
-    category: "Motion Graphics",
-    tools: "After Effects, Premiere Pro, Motion Design",
-    videoId: "17Wg7gomIdSws5v3gOuafHXN_yyZ4S1zZ",
-  },
-  {
     title: "Typography Edit",
     category: "Video Editing",
     tools: "After Effects, Premiere Pro, Typography",
@@ -32,6 +32,18 @@ const projects = [
     category: "3D Art",
     tools: "Blender, HDRI Lighting, Compositing",
     videoId: "13Dnc9xcnJT5Gjdf0w4LGVMC1xXEewmAt",
+  },
+  {
+    title: "Salon Cinematic Edit",
+    category: "Cinematic Edit",
+    tools: "Premiere Pro, After Effects, Color Grading",
+    videoId: "1Me8qBfPvR0f7R3jnMNnLWpJubU6RuucA",
+  },
+  {
+    title: "Documentary Style Edit",
+    category: "Documentary",
+    tools: "Premiere Pro, DaVinci Resolve, Color Grading",
+    videoId: "1PgSGUaRPGex1xddSKCAWYPlPPYVaD0yT",
   },
 ];
 

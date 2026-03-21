@@ -35,8 +35,8 @@ const Contact = () => {
             </a>
           </div>
           <div className="contact-box">
-            <h2>
-              Designed and Developed <br /> by <span>Vaibhav Suneja</span>
+            <h2 className="contact-quote">
+              Editing isn't decoration—it's transformation. I turn static stories into visual adrenaline.
             </h2>
             <h5>
               <MdCopyright /> 2025
