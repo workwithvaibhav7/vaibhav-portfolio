@@ -90,7 +90,7 @@
   width: 3px;
   height: 100%;
   background-image: linear-gradient(to top,
-      #14b8a6 20%,
+      #FF6B35 20%,
       var(--accentColor) 50%,
       transparent 95%);
   max-height: 0%;
@@ -101,11 +101,11 @@
   bottom: 0;
   left: 50%;
   transform: translate(-50%, 50%);
-  background-color: #14b8a6;
+  background-color: #FF6B35;
   width: 10px;
   height: 10px;
   border-radius: 50px;
-  box-shadow: 0px 0px 5px 2px #67e8f9, 0px 0px 15px 8px #5eead4,
+  box-shadow: 0px 0px 5px 2px #FFB347, 0px 0px 15px 8px #FF6B35,
     0px 0px 110px 20px #a5f3fc;
   animation: timeline 0.8s linear infinite forwards;
 }
@@ -117,7 +117,7 @@
   50%,
   70%,
   90% {
-    box-shadow: 0px 0px 5px 2px #67e8f9;
+    box-shadow: 0px 0px 5px 2px #FFB347;
   }
 
   10%,
@@ -126,18 +126,18 @@
   100%,
   64%,
   80% {
-    box-shadow: 0px 0px 5px 2px #67e8f9, 0px 0px 15px 5px #5eead4,
+    box-shadow: 0px 0px 5px 2px #FFB347, 0px 0px 15px 5px #FF6B35,
       0px 0px 110px 20px #a5f3fc;
   }
 }
 
 @keyframes timeline2 {
   0% {
-    box-shadow: 0px 0px 5px 2px #67e8f9;
+    box-shadow: 0px 0px 5px 2px #FFB347;
   }
 
   100% {
-    box-shadow: 0px 0px 5px 2px #67e8f9, 0px 0px 15px 5px #5eead4,
+    box-shadow: 0px 0px 5px 2px #FFB347, 0px 0px 15px 5px #FF6B35,
       0px 0px 110px 20px #a5f3fc;
   }
 }
