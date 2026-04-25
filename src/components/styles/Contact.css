@@ -17,6 +17,14 @@
 .contact-flex {
   display: flex;
   justify-content: space-between;
+  gap: 40px;
+}
+
+.contact-box {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
 }
 
 .contact-flex h4 {
@@ -25,14 +33,28 @@
   opacity: 0.6;
 }
 
-.contact-box {
-  display: flex;
-  flex-direction: column;
+.contact-box input,
+.contact-box textarea {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #fff;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.contact-flex p {
-  margin-top: 10px;
-  margin-bottom: 20px;
+.contact-box button[type="submit"] {
+  background: #FF4D6D;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
 }
 
 a.contact-social {
