@@ -1,6 +1,28 @@
+import { useEffect, useState } from "react";
 import "./styles/Career.css";
+import HoverLinks from "./HoverLinks";
+import { supabase } from "../lib/supabase";
+
+interface CareerItem {
+  id: string;
+  role: string;
+  company: string;
+  year: string;
+  description: string;
+  order_index: number;
+}
 
 const Career = () => {
+  const [items, setItems] = useState<CareerItem[]>([]);
+
+  useEffect(() => {
+    const fetchCareer = async () => {
+      const { data } = await supabase.from("career").select("*").order("order_index");
+      if (data) setItems(data);
+    };
+    fetchCareer();
+  }, []);
+
   return (
     <div className="career-section section-container">
       <div className="career-container">
@@ -12,51 +34,23 @@ const Career = () => {
           <div className="career-timeline">
             <div className="career-dot"></div>
           </div>
-          <div className="career-info-box">
-            <div className="career-info-in">
-              <div className="career-role">
-                <h4>Started Video Editing & Motion Graphics</h4>
-                <h5>Self-Taught</h5>
+          {items.map((item) => (
+            <div className="career-info-box" key={item.id}>
+              <div className="career-info-in">
+                <div className="career-role">
+                  <h4>{item.role}</h4>
+                  <h5>{item.company}</h5>
+                </div>
+                <h3>{item.year}</h3>
               </div>
-              <h3>2021</h3>
+              <p>{item.description}</p>
             </div>
-            <p>
-              Began learning video editing and motion graphics from scratch.
-              Built a strong foundation in pacing, color grading, and visual
-              storytelling using Premiere Pro and After Effects.
-            </p>
-          </div>
-          <div className="career-info-box">
-            <div className="career-info-in">
-              <div className="career-role">
-                <h4>Professional Video Editor & Motion Designer</h4>
-                <h5>Freelance</h5>
-              </div>
-              <h3>2023</h3>
-            </div>
-            <p>
-              Reached a professional level in video editing and motion graphics.
-              Started delivering high-quality brand reels, cinematic edits, and
-              motion content for clients and creators.
-            </p>
-          </div>
-          <div className="career-info-box">
-            <div className="career-info-in">
-              <div className="career-role">
-                <h4>Pro Video Editor & Beginner 3D Artist</h4>
-                <h5>Independent — New Delhi, India</h5>
-              </div>
-              <h3>2025</h3>
-            </div>
-            <p>
-              Delivering pro-level video editing and motion graphics for brands
-              and digital platforms. Currently at the beginning stage of 3D
-              artistry using Blender — expanding into product visualizations
-              and 3D renders.
-            </p>
-          </div>
+          ))}
         </div>
       </div>
+      <a className="career-resume title" href="#">
+        <HoverLinks text="RESUME" />
+      </a>
     </div>
   );
 };

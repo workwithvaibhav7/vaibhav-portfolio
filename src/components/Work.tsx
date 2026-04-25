@@ -1,55 +1,34 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import "./styles/Work.css";
 import { MdArrowBack, MdArrowForward } from "react-icons/md";
+import { supabase } from "../lib/supabase";
 
-const projects = [
-  {
-    title: "Motion Graphic Reel Edit",
-    category: "Motion Graphics",
-    tools: "After Effects, Premiere Pro, Motion Design",
-    videoId: "17Wg7gomIdSws5v3gOuafHXN_yyZ4S1zZ",
-  },
-  {
-    title: "Motion Graphics Talking Head Short",
-    category: "Motion Graphics",
-    tools: "After Effects, Premiere Pro, Motion Design",
-    videoId: "1KrdgpQS2po3DXBfb8njJLkHIo2CWKId8",
-  },
-  {
-    title: "Short Form Edit",
-    category: "Video Editing",
-    tools: "Premiere Pro, After Effects, Color Grading",
-    videoId: "1LRn9F7J0w1BzuYhzt7uSPzo5B3zRW6cp",
-  },
-  {
-    title: "Typography Edit",
-    category: "Video Editing",
-    tools: "After Effects, Premiere Pro, Typography",
-    videoId: "1SEZUoEFH1Ci2l1Tc9cCRoNxO4X3u7DYw",
-  },
-  {
-    title: "3D Product Visualisation",
-    category: "3D Art",
-    tools: "Blender, HDRI Lighting, Compositing",
-    videoId: "13Dnc9xcnJT5Gjdf0w4LGVMC1xXEewmAt",
-  },
-  {
-    title: "Salon Cinematic Edit",
-    category: "Cinematic Edit",
-    tools: "Premiere Pro, After Effects, Color Grading",
-    videoId: "1Me8qBfPvR0f7R3jnMNnLWpJubU6RuucA",
-  },
-  {
-    title: "Documentary Style Edit",
-    category: "Documentary",
-    tools: "Premiere Pro, DaVinci Resolve, Color Grading",
-    videoId: "1PgSGUaRPGex1xddSKCAWYPlPPYVaD0yT",
-  },
-];
+interface Project {
+  id: string;
+  title: string;
+  category: string;
+  tools: string;
+  video_id: string;
+  order_index: number;
+}
 
 const Work = () => {
+  const [projects, setProjects] = useState<Project[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      const { data } = await supabase
+        .from("videos")
+        .select("*")
+        .order("order_index");
+      if (data) setProjects(data);
+      setLoading(false);
+    };
+    fetchVideos();
+  }, []);
 
   const goToSlide = useCallback(
     (index: number) => {
@@ -62,51 +41,39 @@ const Work = () => {
   );
 
   const goToPrev = useCallback(() => {
-    const newIndex =
-      currentIndex === 0 ? projects.length - 1 : currentIndex - 1;
+    const newIndex = currentIndex === 0 ? projects.length - 1 : currentIndex - 1;
     goToSlide(newIndex);
-  }, [currentIndex, goToSlide]);
+  }, [currentIndex, goToSlide, projects.length]);
 
   const goToNext = useCallback(() => {
-    const newIndex =
-      currentIndex === projects.length - 1 ? 0 : currentIndex + 1;
+    const newIndex = currentIndex === projects.length - 1 ? 0 : currentIndex + 1;
     goToSlide(newIndex);
-  }, [currentIndex, goToSlide]);
+  }, [currentIndex, goToSlide, projects.length]);
+
+  if (loading) return (
+    <div className="work-section" id="work">
+      <div className="work-container section-container">
+        <h2>My <span>Work</span></h2>
+        <p style={{ color: "#fff", opacity: 0.5 }}>Loading...</p>
+      </div>
+    </div>
+  );
 
   return (
     <div className="work-section" id="work">
       <div className="work-container section-container">
-        <h2>
-          My <span>Work</span>
-        </h2>
-
+        <h2>My <span>Work</span></h2>
         <div className="carousel-wrapper">
-          <button
-            className="carousel-arrow carousel-arrow-left"
-            onClick={goToPrev}
-            aria-label="Previous project"
-            data-cursor="disable"
-          >
+          <button className="carousel-arrow carousel-arrow-left" onClick={goToPrev} aria-label="Previous project" data-cursor="disable">
             <MdArrowBack />
           </button>
-          <button
-            className="carousel-arrow carousel-arrow-right"
-            onClick={goToNext}
-            aria-label="Next project"
-            data-cursor="disable"
-          >
+          <button className="carousel-arrow carousel-arrow-right" onClick={goToNext} aria-label="Next project" data-cursor="disable">
             <MdArrowForward />
           </button>
-
           <div className="carousel-track-container">
-            <div
-              className="carousel-track"
-              style={{
-                transform: `translateX(-${currentIndex * 100}%)`,
-              }}
-            >
+            <div className="carousel-track" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
               {projects.map((project, index) => (
-                <div className="carousel-slide" key={index}>
+                <div className="carousel-slide" key={project.id}>
                   <div className="carousel-content">
                     <div className="carousel-info">
                       <div className="carousel-number">
@@ -123,15 +90,11 @@ const Work = () => {
                     </div>
                     <div className="carousel-image-wrapper">
                       <iframe
-                        src={`https://drive.google.com/file/d/${project.videoId}/preview`}
+                        src={`https://drive.google.com/file/d/${project.video_id}/preview`}
                         width="100%"
                         height="100%"
                         allow="autoplay"
-                        style={{
-                          border: "none",
-                          borderRadius: "8px",
-                          minHeight: "320px",
-                        }}
+                        style={{ border: "none", borderRadius: "8px", minHeight: "320px" }}
                       ></iframe>
                     </div>
                   </div>
@@ -139,14 +102,11 @@ const Work = () => {
               ))}
             </div>
           </div>
-
           <div className="carousel-dots">
             {projects.map((_, index) => (
               <button
                 key={index}
-                className={`carousel-dot ${
-                  index === currentIndex ? "carousel-dot-active" : ""
-                }`}
+                className={`carousel-dot ${index === currentIndex ? "carousel-dot-active" : ""}`}
                 onClick={() => goToSlide(index)}
                 aria-label={`Go to project ${index + 1}`}
                 data-cursor="disable"

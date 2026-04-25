@@ -1,0 +1,152 @@
+.dash-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0d0d1a;
+}
+.dash-login-box {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 360px;
+}
+.dash-login-box h2 { color: #fff; font-size: 24px; margin: 0; }
+.dash-login-box input {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  padding: 12px 16px;
+  color: #fff;
+  font-size: 15px;
+}
+.dash-login-box button {
+  background: #FF4D6D;
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.dashboard {
+  min-height: 100vh;
+  background: #0d0d1a;
+  color: #fff;
+  font-family: sans-serif;
+}
+.dash-header {
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.dash-header h1 { margin: 0; font-size: 22px; color: #FF4D6D; }
+.dash-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+.dash-tabs button {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 8px 16px;
+  color: rgba(255,255,255,0.6);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.dash-tabs button.active, .dash-tabs button:hover {
+  background: #FF4D6D;
+  color: #fff;
+  border-color: #FF4D6D;
+}
+.dash-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+.dash-content h2 { font-size: 22px; margin: 0 0 24px; color: #fff; }
+.dash-content h3 { font-size: 17px; margin: 0 0 16px; color: rgba(255,255,255,0.7); }
+
+.dash-list { display: flex; flex-direction: column; gap: 12px; }
+.dash-item {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+.dash-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.dash-item-row div { display: flex; flex-direction: column; gap: 4px; }
+.dash-item-row strong { font-size: 15px; color: #fff; }
+.dash-item-row span { font-size: 13px; color: rgba(255,255,255,0.5); }
+
+.dash-edit-form, .dash-add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.dash-edit-form input, .dash-edit-form textarea,
+.dash-add-form input, .dash-add-form textarea {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #fff;
+  font-size: 14px;
+  resize: vertical;
+}
+.dash-btn-row { display: flex; gap: 8px; margin-top: 4px; }
+.dash-btn-row button, button.save, button.edit, button.delete, button.cancel {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+button.save { background: #FF4D6D; color: #fff; }
+button.edit { background: rgba(255,255,255,0.1); color: #fff; }
+button.delete { background: rgba(255,60,60,0.2); color: #ff6b6b; }
+button.cancel { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.6); }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.dash-msg { display: flex; flex-direction: column; gap: 10px; }
+.dash-msg-header { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.dash-msg-header strong { font-size: 15px; }
+.dash-msg-header span { font-size: 13px; color: rgba(255,255,255,0.5); }
+.dash-msg p { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.6; margin: 0; }
+.dash-unread {
+  background: #FF4D6D;
+  color: #fff;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 700;
+}
+
+.dash-toast {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  background: #FF4D6D;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
