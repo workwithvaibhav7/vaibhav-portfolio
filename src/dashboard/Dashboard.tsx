@@ -9,7 +9,7 @@ interface CareerItem { id: string; role: string; company: string; year: string; 
 interface Message { id: string; name: string; email: string; message: string; created_at: string; is_read: boolean; }
 
 const Dashboard = () => {
-  const [authed, setAuthed] = useState(false);
+  const [authed, setAuthed] = useState(false); // refresh pe reset
   const [password, setPassword] = useState("");
   const [tab, setTab] = useState<"videos" | "bio" | "career" | "messages">("videos");
 

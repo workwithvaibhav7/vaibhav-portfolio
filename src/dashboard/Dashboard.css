@@ -37,9 +37,13 @@
 
 .dashboard {
   min-height: 100vh;
+  height: 100vh;
   background: #0d0d1a;
   color: #fff;
   font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 .dash-header {
   background: rgba(255,255,255,0.03);
@@ -49,6 +53,7 @@
   align-items: center;
   gap: 32px;
   flex-wrap: wrap;
+  flex-shrink: 0;
 }
 .dash-header h1 { margin: 0; font-size: 22px; color: #FF4D6D; }
 .dash-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -68,9 +73,24 @@
   border-color: #FF4D6D;
 }
 .dash-content {
+  flex: 1;
+  overflow-y: auto;
   max-width: 900px;
+  width: 100%;
   margin: 0 auto;
   padding: 40px 24px;
+  scrollbar-width: thin;
+  scrollbar-color: #FF4D6D rgba(255,255,255,0.05);
+}
+.dash-content::-webkit-scrollbar {
+  width: 6px;
+}
+.dash-content::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.03);
+}
+.dash-content::-webkit-scrollbar-thumb {
+  background: #FF4D6D;
+  border-radius: 10px;
 }
 .dash-content h2 { font-size: 22px; margin: 0 0 24px; color: #fff; }
 .dash-content h3 { font-size: 17px; margin: 0 0 16px; color: rgba(255,255,255,0.7); }
