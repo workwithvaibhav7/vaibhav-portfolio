@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { supabase } from "../lib/supabase";
 import "./Dashboard.css";
 
@@ -9,29 +9,28 @@ interface CareerItem { id: string; role: string; company: string; year: string; 
 interface Message { id: string; name: string; email: string; message: string; created_at: string; is_read: boolean; }
 
 const Dashboard = () => {
-  const [authed, setAuthed] = useState(false); // refresh pe reset
+  const [authed, setAuthed] = useState(false);
   const [password, setPassword] = useState("");
   const [tab, setTab] = useState<"videos" | "bio" | "career" | "messages">("videos");
 
-  // Videos state
   const [videos, setVideos] = useState<Video[]>([]);
   const [newVideo, setNewVideo] = useState({ title: "", category: "", tools: "", video_id: "", order_index: 0 });
   const [editVideo, setEditVideo] = useState<Video | null>(null);
 
-  // Bio state
   const [bio, setBio] = useState("");
   const [bioId, setBioId] = useState("");
 
-  // Career state
   const [career, setCareer] = useState<CareerItem[]>([]);
   const [newCareer, setNewCareer] = useState({ role: "", company: "", year: "", description: "", order_index: 0 });
   const [editCareer, setEditCareer] = useState<CareerItem | null>(null);
 
-  // Messages state
   const [messages, setMessages] = useState<Message[]>([]);
-
   const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState("");
+
+  // Drag & Drop state
+  const dragItem = useRef<number | null>(null);
+  const dragOverItem = useRef<number | null>(null);
 
   const showToast = (msg: string) => {
     setToast(msg);
@@ -61,6 +60,40 @@ const Dashboard = () => {
     else alert("Wrong password!");
   };
 
+  // Drag & Drop handlers
+  const handleDragStart = (index: number) => {
+    dragItem.current = index;
+  };
+
+  const handleDragEnter = (index: number) => {
+    dragOverItem.current = index;
+  };
+
+  const handleDragEnd = async () => {
+    if (dragItem.current === null || dragOverItem.current === null) return;
+    if (dragItem.current === dragOverItem.current) return;
+
+    const newVideos = [...videos];
+    const draggedItem = newVideos[dragItem.current];
+    newVideos.splice(dragItem.current, 1);
+    newVideos.splice(dragOverItem.current, 0, draggedItem);
+
+    // Update order_index
+    const updated = newVideos.map((v, i) => ({ ...v, order_index: i + 1 }));
+    setVideos(updated);
+
+    dragItem.current = null;
+    dragOverItem.current = null;
+
+    // Save to Supabase
+    setSaving(true);
+    await Promise.all(updated.map(v =>
+      supabase.from("videos").update({ order_index: v.order_index }).eq("id", v.id)
+    ));
+    showToast("Order saved! ✅");
+    setSaving(false);
+  };
+
   // Videos CRUD
   const addVideo = async () => {
     setSaving(true);
@@ -87,7 +120,6 @@ const Dashboard = () => {
     showToast("Video deleted!");
   };
 
-  // Bio update
   const updateBio = async () => {
     setSaving(true);
     await supabase.from("bio").update({ description: bio }).eq("id", bioId);
@@ -95,7 +127,6 @@ const Dashboard = () => {
     setSaving(false);
   };
 
-  // Career CRUD
   const addCareer = async () => {
     setSaving(true);
     await supabase.from("career").insert([{ ...newCareer, order_index: career.length + 1 }]);
@@ -121,7 +152,6 @@ const Dashboard = () => {
     showToast("Career item deleted!");
   };
 
-  // Mark message as read
   const markRead = async (id: string) => {
     await supabase.from("contact_messages").update({ is_read: true }).eq("id", id);
     await fetchAll();
@@ -163,16 +193,25 @@ const Dashboard = () => {
         {tab === "videos" && (
           <div>
             <h2>Videos</h2>
+            <p style={{ opacity: 0.5, fontSize: "13px", marginBottom: "16px", marginTop: "-16px" }}>⠿ Drag to reorder</p>
             <div className="dash-list">
-              {videos.map(v => (
-                <div className="dash-item" key={v.id}>
+              {videos.map((v, index) => (
+                <div
+                  className="dash-item"
+                  key={v.id}
+                  draggable
+                  onDragStart={() => handleDragStart(index)}
+                  onDragEnter={() => handleDragEnter(index)}
+                  onDragEnd={handleDragEnd}
+                  onDragOver={e => e.preventDefault()}
+                  style={{ cursor: "grab", transition: "opacity 0.2s" }}
+                >
                   {editVideo?.id === v.id ? (
                     <div className="dash-edit-form">
                       <input value={editVideo.title} onChange={e => setEditVideo({ ...editVideo, title: e.target.value })} placeholder="Title" />
                       <input value={editVideo.category} onChange={e => setEditVideo({ ...editVideo, category: e.target.value })} placeholder="Category" />
                       <input value={editVideo.tools} onChange={e => setEditVideo({ ...editVideo, tools: e.target.value })} placeholder="Tools" />
                       <input value={editVideo.video_id} onChange={e => setEditVideo({ ...editVideo, video_id: e.target.value })} placeholder="Google Drive ID" />
-                      <input type="number" value={editVideo.order_index} onChange={e => setEditVideo({ ...editVideo, order_index: Number(e.target.value) })} placeholder="Order" />
                       <div className="dash-btn-row">
                         <button className="save" onClick={updateVideo} disabled={saving}>Save</button>
                         <button className="cancel" onClick={() => setEditVideo(null)}>Cancel</button>
@@ -180,9 +219,12 @@ const Dashboard = () => {
                     </div>
                   ) : (
                     <div className="dash-item-row">
-                      <div>
-                        <strong>#{v.order_index} {v.title}</strong>
-                        <span>{v.category}</span>
+                      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                        <span style={{ fontSize: "20px", opacity: 0.4, cursor: "grab" }}>⠿</span>
+                        <div>
+                          <strong>#{v.order_index} {v.title}</strong>
+                          <span>{v.category}</span>
+                        </div>
                       </div>
                       <div className="dash-btn-row">
                         <button className="edit" onClick={() => setEditVideo(v)}>Edit</button>
