@@ -17,6 +17,7 @@ const Work = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [playingIndex, setPlayingIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -34,6 +35,7 @@ const Work = () => {
     (index: number) => {
       if (isAnimating) return;
       setIsAnimating(true);
+      setPlayingIndex(null);
       setCurrentIndex(index);
       setTimeout(() => setIsAnimating(false), 500);
     },
@@ -89,13 +91,50 @@ const Work = () => {
                       </div>
                     </div>
                     <div className="carousel-image-wrapper">
-                      <iframe
-                        src={`https://drive.google.com/file/d/${project.video_id}/preview`}
-                        width="100%"
-                        height="100%"
-                        allow="autoplay"
-                        style={{ border: "none", borderRadius: "8px", minHeight: "320px" }}
-                      ></iframe>
+                      {playingIndex === index ? (
+                        <iframe
+                          src={`https://drive.google.com/file/d/${project.video_id}/preview`}
+                          width="100%"
+                          height="100%"
+                          allow="autoplay; fullscreen"
+                          allowFullScreen
+                          style={{
+                            border: "none",
+                            borderRadius: "8px",
+                            minHeight: "320px",
+                            display: "block",
+                          }}
+                        />
+                      ) : (
+                        <div
+                          onClick={() => setPlayingIndex(index)}
+                          style={{
+                            width: "100%",
+                            minHeight: "320px",
+                            background: "rgba(255,255,255,0.05)",
+                            borderRadius: "8px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            cursor: "pointer",
+                            border: "1px solid rgba(255,255,255,0.1)",
+                            flexDirection: "column",
+                            gap: "12px",
+                          }}
+                        >
+                          <div style={{
+                            width: "64px",
+                            height: "64px",
+                            background: "#FF4D6D",
+                            borderRadius: "50%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: "24px",
+                          }}>▶</div>
+                          <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "14px", margin: 0 }}>Tap to play</p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
